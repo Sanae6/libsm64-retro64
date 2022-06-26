@@ -488,6 +488,11 @@ SM64_LIB_FN void sm64_surface_object_move( uint32_t objectId, const struct SM64O
     surface_object_update_transform( objectId, transform );
 }
 
+SM64_LIB_FN struct SM64Surface* sm64_surface_object_get_surfaces( uint32_t objectId, uint32_t* surfaceCount )
+{
+    return surface_object_get_surfaces( objectId, surfaceCount );
+}
+
 SM64_LIB_FN void sm64_surface_object_delete( uint32_t objectId )
 {
     // A mario standing on the platform that is being destroyed will have a pointer to freed memory if we don't clear it.

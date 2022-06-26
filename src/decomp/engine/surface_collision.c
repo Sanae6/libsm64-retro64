@@ -78,6 +78,7 @@ static struct Surface *find_ceil_from_list( s32 x, s32 y, s32 z, f32 *pheight) {
     return ceil;
 }
 
+#include <stdio.h>
 /**
  * Iterate through the list of floors and find the first floor under a given point.
  */
@@ -94,6 +95,8 @@ static struct Surface *find_floor_from_list( s32 x, s32 y, s32 z, f32 *pheight) 
     uint32_t surfCount = loaded_surface_iter_group_size( i );
     for( int j = 0; j < surfCount; ++j ) {
         surf = loaded_surface_iter_get_at_index( i, j );
+		
+		//printf("valid=%d, normal=%f\n", surf->isValid, surf->normal.y);
 
         // libsm64: Weed out surfaces whose triangles are actually line segs. TODO do this at surface load time
         if( !surf->isValid ) continue;
@@ -106,14 +109,16 @@ static struct Surface *find_floor_from_list( s32 x, s32 y, s32 z, f32 *pheight) 
         x2 = surf->vertex2[0];
         z2 = surf->vertex2[2];
 
+        x3 = surf->vertex3[0];
+        z3 = surf->vertex3[2];
         // Check that the point is within the triangle bounds.
+		//printf("x=%d, z=%d, x1=%d, z1=%d, x2=%d, z2=%d, x3=%d, z3=%d\n", x, z, x1, z1, x2, z2, x3, z3);
+		//printf("calc1=%d, calc2=%d, calc3=%d\n", (z1 - z) * (x2 - x1) - (x1 - x) * (z2 - z1), (z2 - z) * (x3 - x2) - (x2 - x) * (z3 - z2),(z3 - z) * (x1 - x3) - (x3 - x) * (z1 - z3));
         if ((z1 - z) * (x2 - x1) - (x1 - x) * (z2 - z1) < 0) {
             continue;
         }
 
         // To slightly save on computation time, set this later.
-        x3 = surf->vertex3[0];
-        z3 = surf->vertex3[2];
 
         if ((z2 - z) * (x3 - x2) - (x2 - x) * (z3 - z2) < 0) {
             continue;

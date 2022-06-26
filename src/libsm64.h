@@ -97,6 +97,7 @@ extern SM64_LIB_FN void sm64_mChar_heal( int32_t marioId, char healCounter );
 
 extern SM64_LIB_FN uint32_t sm64_surface_object_create( const struct SM64SurfaceObject *surfaceObject );
 extern SM64_LIB_FN void sm64_surface_object_move( uint32_t objectId, const struct SM64ObjectTransform *transform );
+extern SM64_LIB_FN struct SM64Surface* sm64_surface_object_get_surfaces( uint32_t objectId, uint32_t* surfaceCount );
 extern SM64_LIB_FN void sm64_surface_object_delete( uint32_t objectId );
 
 extern SM64_LIB_FN void sm64_seq_player_play_sequence(u8 player, u8 seqId, u16 arg2);

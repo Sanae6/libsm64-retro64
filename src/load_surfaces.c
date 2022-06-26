@@ -280,6 +280,21 @@ uint32_t surfaces_load_object( const struct SM64SurfaceObject *surfaceObject )
     return idx;
 }
 
+struct SM64Surface* surface_object_get_surfaces( uint32_t objId, uint32_t* surfaceCount )
+{
+    if( objId >= s_surface_object_count || s_surface_object_list[objId].surfaceCount == 0 )
+    {
+        DEBUG_PRINT("Tried to get surfaces from non-existant surface object with ID: %u", objId);
+        return NULL;
+    }
+
+
+    struct LoadedSurfaceObject *obj = &s_surface_object_list[objId];
+    if ( surfaceCount != NULL )
+        *surfaceCount = obj->surfaceCount;
+    return obj->libSurfaces;
+}
+
 void surfaces_unload_object( uint32_t objId )
 {
     if( objId >= s_surface_object_count || s_surface_object_list[objId].surfaceCount == 0 )
